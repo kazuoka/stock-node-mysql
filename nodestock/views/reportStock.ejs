@@ -1,0 +1,57 @@
+<%- include("header") %>
+
+<div class="panel">
+    <div class="panel-header">
+        <i class="fa fa-bar-chart"></i> Report
+    </div>
+    <div class="panel-body">
+        <form method="post">
+            <div style="display: inline-block;">
+                <label>Date From</label>
+                <input type="date" name="from" value="<%= from %>" />
+            </div>
+            <div style="display: inline-block;">
+                <label>Date To</label>
+                <input type="date" name="to" value="<%= to %>" />
+            </div>
+            <button type="submit" class="btn">
+                <i class="fa fa-check"></i> Report Data
+            </button>
+        </form>
+        <div>&nbsp;</div>
+        <table>
+            <thead>
+                <tr>
+                    <th width="100px">barcode</th>
+                    <th>Product Name</th>
+                    <th width="120px">Import Stock</th>
+                    <th width="120px">Out Stock</th>
+                    <th width="100px">Report</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% products.forEach(item => { %>
+                <tr>
+                    <td>
+                        <%= item.barcode %>
+                    </td>
+                    <td>
+                        <%= item.name %>
+                    </td>
+                    <td style="text-align: right;">
+                        <%= item.total_import %>
+                    </td>
+                    <td style="text-align: right;">
+                        <%= item.total_out %>
+                    </td>
+                    <td style="text-align: right;">
+                        <%= item.total_import - item.total_out %>
+                    </td>
+                </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<%- include("footer") %>

@@ -1,0 +1,55 @@
+<%- include("header") %>
+
+<script>
+    function searchProduct() {
+        let barcode = document.getElementById('barcode');
+        let product_id = document.getElementById('product_id');
+        let name = document.getElementById('name');
+        let body = JSON.stringify({
+            barcode: barcode.value
+        });
+        fetch('searchProduct', {
+            method: "POST",
+            body: body,
+            headers: {
+               'Content-Type': 'application/json' 
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.length > 0) {
+                data = data[0];
+                product_id.value = data.id;
+                name.value = data.name;
+            } else {
+                alert('No barcode found');
+                name.value = '';
+            }
+        });    
+    }
+</script>
+
+<div class="panel">
+    <div class="panel-header">
+        <i class="fa fa-arrow-up"></i> Out Stock
+    </div>
+    <div class="panel-body">
+        <form method="post">
+            <div>
+                <label>Barcode</label>
+                <input id="barcode" onblur="searchProduct()" />
+                <input id="name" disabled size="70" />
+                <input type="hidden" name="product_id" id="product_id" />
+            </div>
+            <div>
+                <label>Quantity</label>
+                <input name="qty" />
+            </div>
+            <button class="btn">
+                <i class="fa fa-check"></i> Save
+            </button>
+        </form>
+    </div>
+</div>
+
+<%- include("footer") %>
